@@ -1,0 +1,69 @@
+name: "MCP Discovery Action"
+author: "Ali Hashemi"
+description: "A GitHub Action to run the mcp-discovery CLI for printing, creating, or updating MCP server capability details"
+
+inputs:
+  command:
+    description: "CLI command to run (print, create, or update)"
+    required: true
+  mcp-launch-command:
+    description: "Command and arguments to launch the MCP server"
+    required: true
+  filename:
+    description: "Output file path for create/update commands"
+    default: "mcp-discovery.md"
+    required: false
+  template:
+    description: "Built-in template for output (md, md-plain, html, txt)"
+    required: false
+  template-file:
+    description: "Path to a custom Handlebars template file"
+    required: false
+  template-string:
+    description: "Custom Handlebars template content as a string"
+    required: false
+  CLI_VERSION:
+    description: "CLI version (e.g., latest or v0.1.2)"
+    required: true
+    default: "latest"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install mcp-discovery CLI
+      shell: bash
+      run: |
+        curl --proto '=https' --tlsv1.2 -LsSf ${{MCP_DISCOVERY_INSTALLER}} | sh
+      env:
+        MCP_DISCOVERY_INSTALLER: ${{ github.event.inputs.CLI_VERSION == 'latest' && 'https://github.com/rust-mcp-stack/mcp-discovery/releases/latest/download/mcp-discovery-installer.sh' || format('https://github.com/rust-mcp-stack/mcp-discovery/releases/download/{0}/mcp-discovery-installer.sh', github.event.inputs.CLI_VERSION) }}
+
+    - name: Run mcp-discovery CLI
+      shell: bash
+      env:
+        CLI_COMMAND: ${{ inputs.command }}
+        MCP_LAUNCH_COMMAND: ${{ inputs.mcp-launch-command }}
+        FILENAME: ${{ inputs.filename }}
+        TEMPLATE: ${{ inputs.template }}
+        TEMPLATE_FILE: ${{ inputs.template-file }}
+        TEMPLATE_STRING: ${{ inputs.template-string }}
+      run: |
+        mcp-discovery ${{ inputs.command }} -- ${{MCP_LAUNCH_COMMAND}
+
+    - name: Commit changes
+      if: ${{ inputs.filename != '' }}
+      shell: bash
+      env:
+        FILENAME: ${{ inputs.filename }}
+      run: |
+        git config user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git add "$FILENAME"
+        if git diff --staged --quiet; then
+          echo "No changes to $FILENAME"
+        else
+          git commit -m "Update $FILENAME via mcp-discovery [skip ci]"
+          git push
+        fi
+branding:
+  icon: "link"
+  color: "blue"
