@@ -54,7 +54,14 @@ runs:
         TEMPLATE_FILE: ${{ inputs.template-file }}
         TEMPLATE_STRING: ${{ inputs.template-string }}
       run: |
-        mcp-discovery $CLI_COMMAND -- $MCP_LAUNCH_COMMAND
+        # Build CLI arguments
+        ARGS=""
+        [ -n "$FILENAME" ] && ARGS="$ARGS --filename \"$FILENAME\""
+        [ -n "$TEMPLATE" ] && ARGS="$ARGS --template \"$TEMPLATE\""
+        [ -n "$TEMPLATE_FILE" ] && ARGS="$ARGS --template-file \"$GITHUB_WORKSPACE/$TEMPLATE_FILE\""
+        [ -n "$TEMPLATE_STRING" ] && ARGS="$ARGS --template-string \"$TEMPLATE_STRING\""
+        # Run CLI
+        echo "Running: mcp-discovery $CLI_COMMAND $ARGS -- $MCP_LAUNCH_COMMAND"
 
     - name: Commit changes
       if: ${{ inputs.filename != '' }}
