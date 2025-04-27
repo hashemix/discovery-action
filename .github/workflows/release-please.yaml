@@ -43,5 +43,5 @@ jobs:
         with:
           token: ${{ secrets.RP_SECRET }}
           release-type: simple
-          fork: true
+          fork: false
           skip-github-release: true
