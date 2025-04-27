@@ -42,7 +42,7 @@ runs:
     - name: Install mcp-discovery CLI
       shell: bash
       run: |
-        curl --proto '=https' --tlsv1.2 -LsSf ${{MCP_DISCOVERY_INSTALLER}} | sh
+        curl --proto '=https' --tlsv1.2 -LsSf $INSTALLER_URL | sh
 
     - name: Run mcp-discovery CLI
       shell: bash
@@ -54,7 +54,7 @@ runs:
         TEMPLATE_FILE: ${{ inputs.template-file }}
         TEMPLATE_STRING: ${{ inputs.template-string }}
       run: |
-        mcp-discovery ${{ inputs.command }} -- ${{MCP_LAUNCH_COMMAND}
+        mcp-discovery $CLI_COMMAND -- $MCP_LAUNCH_COMMAND
 
     - name: Commit changes
       if: ${{ inputs.filename != '' }}
