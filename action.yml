@@ -26,7 +26,7 @@ inputs:
   template-string:
     description: "Custom Handlebars template content as a string"
     required: false
-  CLI_VERSION:
+  version:
     description: "CLI version (e.g., latest or v0.1.2)"
     required: true
     default: "latest"
@@ -38,10 +38,10 @@ runs:
       id: set-url
       shell: bash
       run: |
-        if [ "${{ inputs.CLI_VERSION }}" = "latest" ]; then
+        if [ "${{ inputs.version }}" = "latest" ]; then
           echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/latest/download/mcp-discovery-installer.sh" >> $GITHUB_ENV
         else
-          echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/download/${{ inputs.CLI_VERSION }}/mcp-discovery-installer.sh" >> $GITHUB_ENV
+          echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/download/${{ inputs.version }}/mcp-discovery-installer.sh" >> $GITHUB_ENV
         fi
     - name: Install mcp-discovery CLI
       shell: bash
