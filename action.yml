@@ -30,12 +30,19 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Set mcp-discovery CLI version
+      id: set-url
+      shell: bash
+      run: |
+        if [ "${{ github.event.inputs.CLI_VERSION }}" = "latest" ]; then
+          echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/latest/download/mcp-discovery-installer.sh" >> $GITHUB_ENV
+        else
+          echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/download/${{ github.event.inputs.CLI_VERSION }}/mcp-discovery-installer.sh" >> $GITHUB_ENV
+        fi
     - name: Install mcp-discovery CLI
       shell: bash
       run: |
         curl --proto '=https' --tlsv1.2 -LsSf ${{MCP_DISCOVERY_INSTALLER}} | sh
-      env:
-        MCP_DISCOVERY_INSTALLER: ${{ github.event.inputs.CLI_VERSION == 'latest' && 'https://github.com/rust-mcp-stack/mcp-discovery/releases/latest/download/mcp-discovery-installer.sh' || format('https://github.com/rust-mcp-stack/mcp-discovery/releases/download/{0}/mcp-discovery-installer.sh', github.event.inputs.CLI_VERSION) }}
 
     - name: Run mcp-discovery CLI
       shell: bash
