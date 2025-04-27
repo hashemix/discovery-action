@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/hashemix/discovery-action/compare/v1.0.7...v1.0.8) (2025-04-27)
+
+
+### Bug Fixes
+
+* auth token ([954b262](https://github.com/hashemix/discovery-action/commit/954b2620e44a357b09e66e1ec442f9719a6cb9fe))
+
 ## [1.0.7](https://github.com/hashemix/discovery-action/compare/v1.0.6...v1.0.7) (2025-04-27)
 
 
