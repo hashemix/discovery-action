@@ -62,6 +62,7 @@ runs:
         [ -n "$TEMPLATE_STRING" ] && ARGS="$ARGS --template-string \"$TEMPLATE_STRING\""
         # Run CLI
         echo "Running: mcp-discovery $CLI_COMMAND $ARGS -- $MCP_LAUNCH_COMMAND"
+        eval "mcp-discovery $CLI_COMMAND $ARGS -- $MCP_LAUNCH_COMMAND"
 
     - name: Commit changes
       if: ${{ inputs.filename != '' }}
