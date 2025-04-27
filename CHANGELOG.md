@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.11](https://github.com/hashemix/discovery-action/compare/v1.0.10...v1.0.11) (2025-04-27)
+
+
+### Bug Fixes
+
+* update ([b31cad0](https://github.com/hashemix/discovery-action/commit/b31cad0e0784f4d2b25d1ada25a10bd3f64ff78b))
+
 ## [1.0.10](https://github.com/hashemix/discovery-action/compare/v1.0.9...v1.0.10) (2025-04-27)
 
 
