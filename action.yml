@@ -82,7 +82,7 @@ runs:
           echo "No changes to $FILENAME"
         else
           git commit -m "Update $FILENAME via mcp-discovery [skip ci]"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}          
+          git push
         fi
 branding:
   icon: "link"
