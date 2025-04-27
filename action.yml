@@ -34,10 +34,10 @@ runs:
       id: set-url
       shell: bash
       run: |
-        if [ "${{ github.event.inputs.CLI_VERSION }}" = "latest" ]; then
+        if [ "${{ inputs.CLI_VERSION }}" = "latest" ]; then
           echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/latest/download/mcp-discovery-installer.sh" >> $GITHUB_ENV
         else
-          echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/download/${{ github.event.inputs.CLI_VERSION }}/mcp-discovery-installer.sh" >> $GITHUB_ENV
+          echo "INSTALLER_URL=https://github.com/rust-mcp-stack/mcp-discovery/releases/download/${{ inputs.CLI_VERSION }}/mcp-discovery-installer.sh" >> $GITHUB_ENV
         fi
     - name: Install mcp-discovery CLI
       shell: bash
